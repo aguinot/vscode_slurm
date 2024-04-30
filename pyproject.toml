@@ -1,0 +1,26 @@
+[build-system]
+requires = ["setuptools>=64.0", "wheel"]  # , "setuptools_scm[toml]>=6.2"
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "vscode_candide"
+version = "0.0.1"
+authors = [
+  { name="Axel Guinot", email="axel.guinot.astro@gmail.com" },
+]
+description = "Open VScode tunnel on CANDIDE compute nodes"
+readme = "README.md"
+requires-python = ">=3.7,<3.12"
+license = {text = "MIT"}
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+
+[project.urls]
+"Homepage" = "https://github.com/aguinot/vscode_candide"
+"Bug Tracker" = "https://github.com/aguinot/vscode_candide/issues"
+
+[project.scripts]
+vscode_candide = "vscode_candide:main"
