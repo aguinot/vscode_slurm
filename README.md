@@ -55,11 +55,14 @@ code tunnel
 `--partition`  
 &emsp;Specify which sbatch partion to use.  
 &emsp;Default: Let the cluster decide.  
+`--exclusive`  
+&emsp;Specify if the job should be exclusive.  
 
 ### Using the tunnel
 * To open a tunnel:
   * `vscode_candide start`
   * `vscode_dandide start --n_cpu=10 --time=10:00:00 --node=n03`
+  * `vscode_dandide start --exclusive`
 * To close the tunnel:
   * `vscode_candide stop`
 

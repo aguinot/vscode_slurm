@@ -47,7 +47,7 @@ def get_parser():
     parser.add_argument(
         "--log",
         dest="log",
-        default="\$HOME/vscode_tunnel.log",
+        default=r"\$HOME/vscode_tunnel.log",
         type=str,
         help='where to save the log (on the cluster). Default '
         '"$HOME/vscode_tunnel.log"',
@@ -66,6 +66,12 @@ def get_parser():
         type=str,
         help="which partition to use to submit the job. Default let the "
         "cluster decide",
+    )
+    parser.add_argument(
+        "--exclusive",
+        dest="exclusive",
+        action="store_true",
+        help="specify if the job should be exclusive"
     )
 
     return parser
@@ -91,7 +97,6 @@ def check_running(args):
         return res
 
 
-# if __name__ == "__main__":
 def main():
 
     parser = get_parser()
@@ -102,14 +107,17 @@ def main():
     if args.mode == "stop":
         if jobid == "":
             raise Exception("No tunnel open")
-        cmd = f'{args.ssh_command} "{SLURM_DIR}/scancel \$({SLURM_DIR}squeue' \
-            f' --me --name={JOB_NAME} --states=R -h -O JobID)"'
+        cmd = f'{args.ssh_command} "{SLURM_DIR}/scancel ' \
+            rf' \$({SLURM_DIR}squeue --me --name={JOB_NAME} ' \
+            f'--states=R -h -O JobID)"'
     elif args.mode == "start":
         if jobid != "":
             raise Exception(f"Tunnel already open. JobID: {jobid}")
         cmd = f'{args.ssh_command} "{SLURM_DIR}/sbatch --output={args.log} ' \
             f'--job-name={JOB_NAME} --time={args.time} ' \
             f'--cpus-per-task={args.n_cpu} --mem-per-cpu={args.mem}G'
+        if args.exclusive:
+            cmd += " --exclusive"
         if args.node is not None:
             cmd += f' --nodelist={args.node}'
         if args.partition is not None:
@@ -133,10 +141,3 @@ def main():
             raise Exception(f"Tunnel failed to open: {result.strip()}")
         else:
             print(f"Tunnel with JobID: {new_jobid} open")
-
-
-# if __name__ == "__main__":
-#     parser = get_parser()
-
-#     args = parser.parse_args()
-#     main(args)
