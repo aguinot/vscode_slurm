@@ -3,14 +3,14 @@ requires = ["setuptools>=64.0", "wheel"]  # , "setuptools_scm[toml]>=6.2"
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "vscode_candide"
+name = "vscode_slurm"
 version = "0.0.1"
 authors = [
   { name="Axel Guinot", email="axel.guinot.astro@gmail.com" },
 ]
-description = "Open VScode tunnel on CANDIDE compute nodes"
+description = "Open VScode tunnel on Slurm compute nodes"
 readme = "README.md"
-requires-python = ">=3.7,<3.12"
+requires-python = ">=3.7"
 license = {text = "MIT"}
 classifiers = [
     "Programming Language :: Python :: 3",
@@ -19,8 +19,8 @@ classifiers = [
 ]
 
 [project.urls]
-"Homepage" = "https://github.com/aguinot/vscode_candide"
-"Bug Tracker" = "https://github.com/aguinot/vscode_candide/issues"
+"Homepage" = "https://github.com/aguinot/vscode_slurm"
+"Bug Tracker" = "https://github.com/aguinot/vscode_slurm/issues"
 
 [project.scripts]
-vscode_candide = "vscode_candide:main"
+vscode_slurm = "vscode_slurm:main"
