@@ -23,8 +23,8 @@ def get_parser():
         help="command used to ssh the cluster",
     )
     parser.add_argument(
-        "--args.slurm_dir",
-        dest="args.slurm_dir",
+        "--slurm_dir",
+        dest="slurm_dir",
         default="/usr/local/slurm/latest/bin/",
         type=str,
         help="slurm directory",
@@ -87,7 +87,8 @@ def check_running(args):
 
     res = subprocess.getoutput(
         f"{args.ssh_command} "
-        f"{args.slurm_dir}squeue --me --name={JOB_NAME} --states=R -h -O JobID"
+        f"{args.slurm_dir}/squeue --me --name={JOB_NAME} "
+        "--states=R -h -O JobID"
     )
     res = res.strip()
 
@@ -114,7 +115,7 @@ def main():
         if jobid == "":
             raise Exception("No tunnel open")
         cmd = f'{args.ssh_command} "{args.slurm_dir}/scancel ' \
-            rf' \$({args.slurm_dir}squeue --me --name={JOB_NAME} ' \
+            rf' \$({args.slurm_dir}/squeue --me --name={JOB_NAME} ' \
             f'--states=R -h -O JobID)"'
     elif args.mode == "start":
         if jobid != "":

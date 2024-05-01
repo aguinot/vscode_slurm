@@ -36,6 +36,9 @@ Note: It is possible that you need re-authenticate later. If the connection does
 `--ssh_command`  
 &emsp;Allow one to specify a different ssh command to access CANDIDE.  
 &emsp;Default: `ssh candide.iap.fr`  
+`--slurm_dir`  
+&emsp;Allow one to specify a different slurm directory.  
+&emsp;Default: `/usr/local/slurm/latest/bin/`  
 `--n_cpu`  
 &emsp;Specify the number of CPU to use.  
 &emsp;Default: 1  
