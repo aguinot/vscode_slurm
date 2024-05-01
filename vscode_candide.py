@@ -4,7 +4,6 @@ import subprocess
 
 
 JOB_NAME = "VScode_tunnel"
-SLURM_DIR = "/usr/local/slurm/latest/bin/"
 
 
 def get_parser():
@@ -22,6 +21,13 @@ def get_parser():
         default="ssh candide.iap.fr",
         type=str,
         help="command used to ssh the cluster",
+    )
+    parser.add_argument(
+        "--args.slurm_dir",
+        dest="args.slurm_dir",
+        default="/usr/local/slurm/latest/bin/",
+        type=str,
+        help="slurm directory",
     )
     parser.add_argument(
         "--n_cpu",
@@ -81,7 +87,7 @@ def check_running(args):
 
     res = subprocess.getoutput(
         f"{args.ssh_command} "
-        f"{SLURM_DIR}squeue --me --name={JOB_NAME} --states=R -h -O JobID"
+        f"{args.slurm_dir}squeue --me --name={JOB_NAME} --states=R -h -O JobID"
     )
     res = res.strip()
 
@@ -107,14 +113,14 @@ def main():
     if args.mode == "stop":
         if jobid == "":
             raise Exception("No tunnel open")
-        cmd = f'{args.ssh_command} "{SLURM_DIR}/scancel ' \
-            rf' \$({SLURM_DIR}squeue --me --name={JOB_NAME} ' \
+        cmd = f'{args.ssh_command} "{args.slurm_dir}/scancel ' \
+            rf' \$({args.slurm_dir}squeue --me --name={JOB_NAME} ' \
             f'--states=R -h -O JobID)"'
     elif args.mode == "start":
         if jobid != "":
             raise Exception(f"Tunnel already open. JobID: {jobid}")
-        cmd = f'{args.ssh_command} "{SLURM_DIR}/sbatch --output={args.log} ' \
-            f'--job-name={JOB_NAME} --time={args.time} ' \
+        cmd = f'{args.ssh_command} "{args.slurm_dir}/sbatch ' \
+            f'--output={args.log} --job-name={JOB_NAME} --time={args.time} ' \
             f'--cpus-per-task={args.n_cpu} --mem-per-cpu={args.mem}G'
         if args.exclusive:
             cmd += " --exclusive"

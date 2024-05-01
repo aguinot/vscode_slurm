@@ -17,6 +17,7 @@ Once you have un-tar the archive you will get an executable code which you can a
 ```bach
 code tunnel
 ```
+Note: It is possible that you need re-authenticate later. If the connection does not start, check the log file (`--log` below), it will contain a link and a code to authenticate. It looks like authentication through token is under development (see [here](https://learn.microsoft.com/en-us/azure/developer/dev-tunnels/cli-commands)).
 
 &emsp;3\. Setup the tunnel localy. Follow the instruction [here](https://code.visualstudio.com/docs/remote/tunnels#_using-the-vs-code-ui).
 
