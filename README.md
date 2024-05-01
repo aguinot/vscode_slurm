@@ -1,4 +1,4 @@
-# vscode_zlurm
+# vscode_slurm
 
 Allow one to start `VSCode tunnel` on Slurm compute nodes.
 
